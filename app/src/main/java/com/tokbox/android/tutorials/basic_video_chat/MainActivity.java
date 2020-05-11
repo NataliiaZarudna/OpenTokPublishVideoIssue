@@ -178,7 +178,17 @@ public class MainActivity extends AppCompatActivity
 
     private void initializeSession(String apiKey, String sessionId, String token) {
 
-        mSession = new Session.Builder(this, apiKey, sessionId).build();
+        Session.SessionOptions options = new Session.SessionOptions() {
+            @Override
+            public boolean isCamera2Capable() {
+                return true;
+            }
+        };
+
+        mSession = new Session.Builder(this, apiKey, sessionId)
+                .sessionOptions(options)
+                .build();
+
         mSession.setSessionListener(this);
         mSession.connect(token);
     }
